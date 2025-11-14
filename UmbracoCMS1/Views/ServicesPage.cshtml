@@ -1,0 +1,66 @@
+﻿@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Models.Blocks
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    Layout = "_Layout";
+
+    var subtitle = Model.Value<string>("subtitle") ?? "";
+    var mainTitle = Model.Value<string>("mainTitle") ?? "";
+    var introText = Model.Value<string>("introText") ?? "";
+    var services = Model.Value<BlockListModel>("services");
+}
+
+<section class="services-section">
+    <div class="container">
+
+        @* Lilla raden överst (typ Home — Services) *@
+        @if (!string.IsNullOrWhiteSpace(subtitle))
+        {
+            <p class="services-eyebrow">@subtitle</p>
+        }
+
+        @* Stor rubrik (Our Services) *@
+        @if (!string.IsNullOrWhiteSpace(mainTitle))
+        {
+            <h2 class="services-title">@mainTitle</h2>
+        }
+
+        @* Introtext / undertitel *@
+        @if (!string.IsNullOrWhiteSpace(introText))
+        {
+            <p class="services-intro">
+                @Html.Raw(introText)
+            </p>
+        }
+
+        @* GRID MED 6 KORT *@
+        <div class="services-grid">
+            @if (services != null && services.Any())
+            {
+                foreach (var service in services)
+                {
+                    var content = service.Content;
+                    var title = content.Value<string>("serviceTitle") ?? "";
+                    var desc = content.Value<string>("serviceDescription") ?? "";
+                    var image = content.Value<IPublishedContent>("serviceImage");
+
+                    <article class="service-card">
+                        @* Bild/ikon *@
+                        @if (image != null)
+                        {
+                            <img class="service-image" src="@image.Url()" alt="@title" />
+                        }
+
+                        @* Rubrik *@
+                        <h3 class="service-heading">@title</h3>
+
+                        @* Text *@
+                        <p class="service-desc">@desc</p>
+                    </article>
+                }
+            }
+        </div>
+    </div>
+</section>

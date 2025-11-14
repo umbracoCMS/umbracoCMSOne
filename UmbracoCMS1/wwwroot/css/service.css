@@ -1,0 +1,72 @@
+﻿
+
+.services-section {
+    padding: 60px 0;
+}
+
+.services-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.services-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.services-intro {
+    max-width: 600px;
+    color: #666;
+    margin-bottom: 2.5rem;
+}
+
+/* Här gör vi själva griden 🟩 */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 kolumner på desktop */
+    gap: 2rem;
+}
+
+/* 1 kolumn på mobil */
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Kortens styling */
+.service-card {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 0; /* ingen padding runt hela kortet */
+    overflow: hidden; /* så hörnen på bilden blir rundade */
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.service-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.service-heading {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333;
+    margin: 18px 22px 0 22px; /* topp + sidor */
+}
+
+/* Brödtexten under, grå, lite luft */
+.service-desc {
+    margin: 12px 22px 22px 22px;
+    color: #666;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
