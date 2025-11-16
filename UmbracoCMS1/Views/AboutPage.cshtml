@@ -1,0 +1,178 @@
+﻿@using Umbraco.Cms.Core.Models
+@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Extensions
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    Layout = "_Layout";
+
+    var heroTitle = Model.Value<string>("heroTitle") ?? "";
+    var heroText = Model.Value<string>("heroText") ?? "";
+
+    
+    var heroImage = Model.Value<IPublishedContent>("heroImage");
+    var heroImageUrl = heroImage?.Url() ?? "";
+
+    var heroLinks = Model.Value<IEnumerable<Link>>("heroLink") ?? Enumerable.Empty<Link>();
+    var heroLink = heroLinks.FirstOrDefault();
+
+    var services = Model.Value<BlockListModel>("services");
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/about.css" />
+}
+
+<div class="about-page">
+
+   
+    <section class="about-hero">
+        <div class="about-hero-inner">
+
+   
+            <div class="about-hero-left">
+                @if (!string.IsNullOrWhiteSpace(heroTitle))
+                {
+                    <h1>@heroTitle</h1>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(heroText))
+                {
+                    <p class="about-hero-text">@heroText</p>
+                }
+
+                @if (heroLink != null && !string.IsNullOrWhiteSpace(heroLink.Url))
+                {
+                    <a href="@heroLink.Url"
+                       target="@(string.IsNullOrWhiteSpace(heroLink.Target) ? "_self" : heroLink.Target)"
+                       class="about-hero-btn">
+                        @(string.IsNullOrWhiteSpace(heroLink.Name) ? "Learn more" : heroLink.Name)
+                    </a>
+                }
+            </div>
+
+
+            <div class="about-hero-right">
+                @if (!string.IsNullOrWhiteSpace(heroImageUrl))
+                {
+                    <img src="@heroImageUrl" alt="@heroTitle" />
+                }
+            </div>
+
+        </div>
+    </section>
+
+    <section class="about-main">
+        <div class="about-main-inner">
+
+
+            <div class="about-main-left">
+                <span class="about-eyebrow">ABOUT US</span>
+                <h2 class="about-main-title">We have 40 years experience</h2>
+
+                <p class="about-quote">
+                    “We have over 25 years of experience providing expert financial
+                    advice to both businesses and individuals.”
+                </p>
+
+                <p class="about-body">
+                    Dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                    fugiat nulla pariatur excepteur sint occaecat cupidatat non proident,
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                    accusantium.
+                </p>
+
+                <div class="about-signature">
+                    <div class="about-signature-mark">T Fox</div>
+                    <div class="about-signature-meta">
+                        <div class="sig-name">Tina Fox</div>
+                        <div class="sig-role">CEO &amp; Founder</div>
+                    </div>
+                </div>
+            </div>
+
+  
+            <div class="about-main-right">
+                <div class="callback-card">
+                    <div class="callback-card-header">
+                        Request a call back
+                    </div>
+
+                    <div class="callback-card-body">
+                        <p class="callback-intro">
+                            Dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                            fugiat nulla pariatur excepteur sint occaecat.
+                        </p>
+
+                        <form class="callback-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="Name" />
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Email address" />
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" placeholder="Phone" />
+                            </div>
+                            <div class="form-group">
+                                <select>
+                                    <option>Financial consulting</option>
+                                    <option>Investment planning</option>
+                                    <option>Tax strategy</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="callback-submit">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+
+    
+    <section class="services-section">
+        <div class="services-container">
+            <p class="services-eyebrow">OUR SERVICES</p>
+
+            <h2 class="services-heading">
+                We Provide The Solutions<br />
+                To Grow Your Business Faster
+            </h2>
+
+            <div class="services-grid">
+                @if (services != null && services.Any())
+                {
+                    foreach (var service in services)
+                    {
+                        var content = service.Content;
+                        var title = content.Value<string>("serviceTitle") ?? "";
+                        var desc = content.Value<string>("serviceDescription") ?? "";
+                        var image = content.Value<IPublishedContent>("serviceImage");
+
+                        <article class="service-card">
+
+                            @if (image != null)
+                            {
+                                <img class="service-image" src="@image.Url()" alt="@title" />
+                            }
+
+                            <h3 class="service-title">@title</h3>
+                            <p class="service-desc">@desc</p>
+                        </article>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+
+
+</div>

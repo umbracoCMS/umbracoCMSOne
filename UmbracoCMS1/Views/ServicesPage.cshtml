@@ -1,6 +1,6 @@
 ﻿@using Umbraco.Cms.Core.Models
-@using Umbraco.Cms.Core.Models.PublishedContent
 @using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Cms.Core.Models.PublishedContent
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
 @{
@@ -10,24 +10,29 @@
     var mainTitle = Model.Value<string>("mainTitle") ?? "";
     var introText = Model.Value<string>("introText") ?? "";
     var services = Model.Value<BlockListModel>("services");
+    var contactHeading = Model.Value<string>("contactHeading") ?? "";
+    var officeLocation = Model.Value<string>("officeLocation") ?? "";
+    var phoneNumber = Model.Value<string>("phoneNumber") ?? "";
+    var emailAddress = Model.Value<string>("emailAddress") ?? "";
+    var contactImage = Model.Value<IPublishedContent>("contactImage");
+    var contactImageUrl = contactImage?.Url() ?? "";
+
+    var bottomImg = Model.Value<MediaWithCrops>("bottomImage");
 }
 
 <section class="services-section">
     <div class="container">
 
-        @* Lilla raden överst (typ Home — Services) *@
         @if (!string.IsNullOrWhiteSpace(subtitle))
         {
             <p class="services-eyebrow">@subtitle</p>
         }
 
-        @* Stor rubrik (Our Services) *@
         @if (!string.IsNullOrWhiteSpace(mainTitle))
         {
             <h2 class="services-title">@mainTitle</h2>
         }
 
-        @* Introtext / undertitel *@
         @if (!string.IsNullOrWhiteSpace(introText))
         {
             <p class="services-intro">
@@ -35,7 +40,6 @@
             </p>
         }
 
-        @* GRID MED 6 KORT *@
         <div class="services-grid">
             @if (services != null && services.Any())
             {
@@ -47,20 +51,22 @@
                     var image = content.Value<IPublishedContent>("serviceImage");
 
                     <article class="service-card">
-                        @* Bild/ikon *@
                         @if (image != null)
                         {
                             <img class="service-image" src="@image.Url()" alt="@title" />
                         }
-
-                        @* Rubrik *@
                         <h3 class="service-heading">@title</h3>
-
-                        @* Text *@
                         <p class="service-desc">@desc</p>
                     </article>
                 }
             }
         </div>
+
+        @if (bottomImg != null)
+        {
+            <div class="services-footer-image">
+                <img src="@bottomImg.Url()" alt="Services bottom image" />
+            </div>
+        }
     </div>
 </section>

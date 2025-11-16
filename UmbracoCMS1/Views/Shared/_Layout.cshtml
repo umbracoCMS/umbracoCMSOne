@@ -10,6 +10,10 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="~/css/service.css" />
+    <link rel="stylesheet" href="~/css/Home.css" />
+    <link rel="stylesheet" href="~/css/about.css" />
+    @RenderSection("Styles", required: false)
+
     <meta charset="utf-8" />
     <title>@Model?.Name</title>
 
@@ -28,7 +32,6 @@
             box-sizing: border-box;
         }
 
-        /* TOP BAR */
         .topbar {
             background-color: #4f5f5b;
             color: #fff;
@@ -51,7 +54,6 @@
             cursor: pointer;
         }
 
-        
         .site-header {
             background-color: #ffffff;
             border-bottom: 1px solid #e2e2e2;
@@ -108,7 +110,6 @@
             font-size: 18px;
         }
 
-       
         main {
             background-color: #f5f5f5;
         }
@@ -126,8 +127,9 @@
     <div class="topbar">
         <div class="container topbar-inner">
             <div class="topbar-left">
-                <span>example@email.com</span>
-                <span>01 234 567 89</span>
+                <span>
+                    ec@gmail.com<span>
+                        <span>070 134 23 55</span>
             </div>
             <div class="topbar-right">
                 <span>in</span>
